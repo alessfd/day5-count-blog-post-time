@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Blog</title>
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+
+    <body>
+        <nav>
+            <ul class="navbar-item">
+                <li><img src="lmao/brandwhite.png" /></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a id="currentpage" href="blog.html">Blog</a></li>
+                <li style="width:100%;display:flex; justify-content:flex-end;">
+                <a href="contact.html">
+                    <button class="btn-contact">
+                        Contact Me
+                    </button>
+                </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div>
+        <div>
+            <form class="lmao" id="lmaoblog" onsubmit="addData(event)">
+              <h1>Create Blog Post</h1>
+              <div>
+                <label for="input-blog-title">Title</label>
+                <input class="text-input" id="input-blog-title" />
+              </div>
+
+              <div>
+                <label for="input-blog-content">Content</label>
+                <textarea class="text-input" id="input-blog-content"></textarea>
+              </div>
+
+              <div>
+                <label>Upload Image</label>
+                <div class="img-input">
+                  <label for="input-blog-image">Attach File <img src="lmao/upload.png" style="width: 18px" alt="file" /></label>
+                  <input type="file" id="input-blog-image" hidden/>
+                </div>
+              </div>
+
+              <div>
+                <button type="submit">Post Blog</button>
+              </div>
+            </form>
+        </div>
+        <hr class="line" />
+        <div id="contents" class="blog-list">
+
+        </div>
+      </div>
+      <script src="js/blog.js"></script>
+    </body>
+</html>
