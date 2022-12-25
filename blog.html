@@ -25,17 +25,28 @@
         <div>
             <form class="lmao" id="lmaoblog" onsubmit="addData(event)">
               <h1>Create Blog Post</h1>
-              <div>
+              <div style="width: 75%">
                 <label for="input-blog-title">Title</label>
                 <input class="text-input" id="input-blog-title" />
               </div>
 
-              <div>
+              <div style="width: 75%;display: flex;text-align:left;">
+                <div>
+                  <label for="datestart">Start Date</label>
+                  <input type="date" class="text-input" id="datestart" />
+                </div>
+                <div>
+                  <label for="datestart">End Date</label>
+                  <input type="date" class="text-input" id="dateend" />
+                </div>
+              </div>
+
+              <div style="width: 75%">
                 <label for="input-blog-content">Content</label>
                 <textarea class="text-input" id="input-blog-content"></textarea>
               </div>
 
-              <div>
+              <div style="width: 75%">
                 <label>Upload Image</label>
                 <div class="img-input">
                   <label for="input-blog-image">Attach File <img src="lmao/upload.png" style="width: 18px" alt="file" /></label>
@@ -43,7 +54,7 @@
                 </div>
               </div>
 
-              <div>
+              <div style="width: 75%">
                 <button type="submit">Post Blog</button>
               </div>
             </form>

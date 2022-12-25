@@ -5,25 +5,34 @@ function addData(event) {
   event.preventDefault()
 
   let title = document.getElementById("input-blog-title").value;
+  let datestart = document.getElementById("datestart").value;
+  let dateend = document.getElementById("dateend").value;
   let content = document.getElementById("input-blog-content").value;
   let image = document.getElementById("input-blog-image").files;
 
   if (title == "") {
     return alert('Title tidak boleh kosong.')
+  } else if (datestart == "") {
+    return alert('Tanggal mulai tidak boleh kosong.')
+  } else if (dateend == "") {
+    return alert('Tanggal selesai tidak boleh kosong.')
+  } else if (datestart > dateend) {
+    return alert('Tanggal mulai tidak boleh lebih besar dari tanggal selesai.')
   } else if (content == "") {
     return alert('Content tidak boleh kosong.')
   } else if (image.length == 0) {
     return alert('Gambar tidak boleh kosong.')
-  }
+  } 
 
   let gambar = URL.createObjectURL(image[0])
 
   let blog = 
   {
     title,
+    datestart,
+    dateend,
     content,
     gambar,
-    postAt: new Date(),
     author: "Alessandro Fayez"
   }
 
@@ -48,13 +57,16 @@ function renderBlog() {
         <a href="blog-detail.html" target="_blank">${data[index].title}</a>
       </h1>
       <div class="detail-blog-content">
-      ${konversiWaktu(data[index].postAt)} | ${data[index].author}
+      ${konversiWaktu(data[index].datestart)} - ${konversiWaktu(data[index].dateend)}
+      </div>
+      <div>
+      ${data[index].author}
       </div>
       <p>
       ${data[index].content}
       </p>
       <p style="text-align: right;">
-        ${selisihWaktu(data[index].postAt)}
+        Duration: ${selisihWaktu(data[index].datestart, data[index].dateend)}
       </p>
     </div>
   </div>`
@@ -64,49 +76,36 @@ function renderBlog() {
 function konversiWaktu(time) {
   let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Des"]
 
-  let hours = time.getHours()
-  let minutes = time.getMinutes()
+  let a = new Date(time)
+  console.log(a)
 
-  if (hours < 10) {
-    hours = "0" + hours
-  }
-
-  if (minutes < 10) {
-    minutes = "0" + minutes
-  }
-
-  return `${time.getDate()} ${monthName[time.getMonth()]} ${time.getFullYear()} ${hours}:${minutes} WIB`
+  return `${a.getDate()} ${monthName[a.getMonth()]} ${a.getFullYear()}`
 }
 
-function selisihWaktu(time) {
-  let timeNow = new Date()
-  let timePost = time
+function selisihWaktu(timeStart, timeEnd) {
+  let a = new Date(timeStart)
+  let b = new Date(timeEnd)
 
-  let distance = timeNow - timePost
-  console.log("jarak", distance)
+  let duration = b - a
+  console.log("jarak", duration)
 
   let milliseconds = 1000
 
-  let distanceDay = Math.floor(distance / (milliseconds * 60 * 60 * 24))
-  let distanceHours = Math.floor(distance / (milliseconds * 60 * 60))
-  let distanceMinutes = Math.floor(distance / (milliseconds * 60))
-  let distanceSecond = Math.floor(distance / milliseconds)
+  let distanceYear = Math.floor(duration / (milliseconds * 60 * 60 * 24 * 30 * 12))
+  let distanceMonth = Math.floor(duration / (milliseconds * 60 * 60 * 24 * 30))
+  let distanceDay = Math.floor(duration / (milliseconds * 60 * 60 * 24))
 
-  if (distanceDay > 0) {
-    return `${distanceDay} day ago`
-  } else if (distanceHours == 1) {
-    return `${distanceHours} hour ago`
-  } else if (distanceHours > 0) {
-    return `${distanceHours} hours ago`
-  } else if (distanceMinutes == 1) {
-    return `${distanceMinutes} minute ago`
-  } else if (distanceMinutes > 0) {
-    return `${distanceMinutes} minutes ago`
-  } else {
-    return `${distanceSecond} seconds ago`
+  if (distanceYear > 1) {
+    return `${distanceYear} years`
+  } else if (distanceYear == 1) {
+    return `${distanceYear} year`
+  } else if (distanceMonth > 1) {
+    return `${distanceMonth} months`
+  } else if (distanceMonth == 1) {
+    return `${distanceMonth} month`
+  } else if (distanceDay > 1) {
+    return `${distanceDay} days`
+  } else if (distanceDay == 1) {
+    return `${distanceDay} day`
   }
 }
-
-setInterval(function () {
-  renderBlog()
-}, 1000)
